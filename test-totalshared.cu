@@ -15,7 +15,7 @@ using namespace std;
 // ？？BLOCK_SIZE must be power of 2, or else the sum will be wrong
 
 const int BLOCK_SIZE = 78;
-const long long GRID_SIZE = 400002;
+const long long GRID_SIZE = 401000;
 const long long N = BLOCK_SIZE * GRID_SIZE;
 const long long M = sizeof(real) * N;
 void __global__ reduce_shared(real *d_x, real *d_y);
