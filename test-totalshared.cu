@@ -15,10 +15,11 @@ using namespace std;
 // ？？BLOCK_SIZE must be power of 2, or else the sum will be wrong
 
 const int BLOCK_SIZE = 78;
-const long long GRID_SIZE = 410000;
+const long long GRID_SIZE = 6000000;
 const long long N = BLOCK_SIZE * GRID_SIZE;
 const long long M = sizeof(real) * N;
 void __global__ reduce_shared(real *d_x, real *d_y);
+
 
 int main(void)
 {
@@ -40,8 +41,9 @@ int main(void)
 
     CHECK(cudaMemcpy(h_y, d_y, ymem, cudaMemcpyDeviceToHost));
     cout << "number of threads: " << N << endl;
-    cout << "total shared memory: " << (double)GRID_SIZE * BLOCK_SIZE * sizeof(real) / (1024 * 1024 * 1024) << "G" << endl;
+    cout << "total shared memory: " << (double)GRID_SIZE * BLOCK_SIZE * BLOCK_SIZE * sizeof(real) / (1024 * 1024 * 1024) << "G" << endl;
     cout << "shared memory per block: " << (double)BLOCK_SIZE * BLOCK_SIZE * sizeof(real) / 1024 << "K" << endl;
+
     
 
     real result = 0.0;
@@ -66,7 +68,12 @@ void __global__ reduce_shared(real *d_x, real *d_y)
     const int bid = blockIdx.x;
     const long long n = bid * blockDim.x + tid;
     __shared__ real s_y[BLOCK_SIZE][BLOCK_SIZE];
-    s_y[tid][0] = (n < N) ? d_x[n] : 0.0;
+    for (int i = 0; i < BLOCK_SIZE; i++)
+    {
+        s_y[tid][i] = (n < N) ? d_x[n] : 0.0;
+    }
+    
+    // s_y[tid][0] = (n < N) ? d_x[n] : 0.0;
     
     __syncthreads();
 

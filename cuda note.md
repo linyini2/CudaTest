@@ -28,3 +28,11 @@ test-totalshared.cu：测试每个block可以使用的共享内存的大小，�
 
 ![image-20220308204714594](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20220308204714594.png)
 
+
+
+附录
+
+![image-20220309154627545](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20220309154627545.png)
+
+![image-20220309154722403](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20220309154722403.png)
+
